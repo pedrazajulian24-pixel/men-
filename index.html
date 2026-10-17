@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Querés verte conmigo esta noche?</title>
+<meta name="description" content="Tengo una pregunta para vos. Solo hay una respuesta correcta.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="¿Querés verte conmigo esta noche?">
+<meta property="og:description" content="Solo hay una respuesta correcta.">
+<meta property="og:image" content="https://pedrazajulian24-pixel.github.io/men-/gato.jpg">
+<meta property="og:url" content="https://pedrazajulian24-pixel.github.io/men-/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e1430">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e1430'/%3E%3Ccircle cx='32' cy='32' r='16' fill='%23f5c86a'/%3E%3C/svg%3E">
+<style>[hidden]{display:none!important} img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Manrope:wght@400;600;700&display=swap">
+<style>
+/* Layout: one screen over a live night sky; a tilted polaroid of the cat sits beside (or above) the question, the moon watches from the corner, the "No" escapes anywhere and the "Sí" grows until it swallows the screen. Single dark look on purpose. */
+:root{
+  --night:#0e1430;
+  --night-2:#1f2760;
+  --ink:#f4ede0;
+  --muted:#aeb0d0;
+  --moon:#f5c86a;
+  --moon-light:#fff3d6;
+  --moon-deep:#dc9f3a;
+  --rose:#f08a98;
+  --line:rgba(244,237,224,.24);
+  --glow:rgba(245,200,106,.28);
+  --shadow:rgba(3,5,18,.65);
+  --cat:#f2a35b;
+  --cat-deep:#d47c36;
+  --cat-cream:#fde5c8;
+  --cat-ink:#3a2418;
+  --paper-line:rgba(14,20,48,.22);
+  --moon-soft:rgba(245,200,106,.32);
+  --egg-white:#fffaf0;
+  --egg-edge:#e6d6b8;
+  --yolk:#f7b733;
+  --bread:#d99548;
+  --bread-light:#f0c27a;
+  --bread-deep:#a8632a;
+  --cat-gray:#a7a5b4;
+  --display:"Gloock", Georgia, "Times New Roman", serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--night);
+  background-image:radial-gradient(120% 70% at 50% 110%, var(--night-2) 0%, var(--night) 65%);
+  color:var(--ink);
+  font-family:var(--body);
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+.moon{
+  position:fixed;z-index:0;pointer-events:none;
+  top:calc(env(safe-area-inset-top,0px) + 6vh);
+  right:calc(max(16px, env(safe-area-inset-right,0px)) + 5vw);
+  width:clamp(52px, 13vw, 112px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 36% 34%, var(--moon-light) 0%, var(--moon) 52%, var(--moon-deep) 100%);
+  box-shadow:0 0 70px 14px var(--glow);
+  transition:transform 1.2s cubic-bezier(.2,.8,.2,1), box-shadow 1.2s;
+}
+body.dijo-si .moon{transform:scale(1.18);box-shadow:0 0 120px 34px var(--glow)}
+.stage{
+  position:relative;z-index:1;
+  height:100%;box-sizing:border-box;
+  display:grid;place-items:center;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block:24px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.panel{width:100%;max-width:34rem;display:flex;flex-direction:column;gap:1.25rem}
+.texto{display:flex;flex-direction:column;gap:1.25rem;min-width:0}
+
+/* Foto del gato: marco claro, un poco inclinado */
+.foto{
+  margin:0;align-self:flex-start;
+  width:clamp(180px, 62vw, 22rem);box-sizing:border-box;
+  padding:10px;border-radius:6px;
+  background:var(--ink);
+  box-shadow:0 24px 48px -14px var(--shadow);
+  --rot:-3deg;--esc:1;
+  transform:rotate(var(--rot)) scale(var(--esc));
+}
+.foto img{display:block;width:100%;height:auto;aspect-ratio:7/8;object-fit:cover;object-position:50% 30%;border-radius:3px}
+@media (max-width:759px) and (max-height:760px){
+  .foto{width:clamp(150px, 48vw, 210px)}
+}
+@media (min-width:760px){
+  .ask{max-width:62rem;display:grid;grid-template-columns:minmax(260px, 25rem) 1fr;align-items:center;gap:3rem}
+  .ask.foto-der{grid-template-columns:1fr minmax(260px, 25rem)}
+  .ask.foto-der .foto{order:2}
+  .foto{width:100%}
+}
+
+.eyebrow{
+  margin:0;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);
+}
+.q{
+  margin:0;font-family:var(--display);font-weight:400;
+  font-size:clamp(2.4rem, 8.5vw, 4.4rem);line-height:1.02;letter-spacing:-.01em;
+  text-wrap:balance;
+}
+.q em{font-style:normal;color:var(--moon)}
+.sub{margin:0;color:var(--muted);font-size:1.05rem;line-height:1.55;max-width:30rem}
+.choices{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;min-height:4.5rem;margin-top:.4rem}
+.btn{
+  font:inherit;cursor:pointer;border-radius:999px;border:1px solid transparent;box-sizing:border-box;
+  padding:.8em 2.1em;line-height:1;white-space:nowrap;
+}
+.btn:focus-visible,.copy:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.si{
+  --grow:1;
+  font-size:calc(1.08rem * var(--grow));
+  font-weight:700;color:var(--night);background:var(--moon);
+  box-shadow:0 10px 30px -10px var(--glow);
+  transition:font-size .3s cubic-bezier(.2,.9,.3,1.3), transform .15s;
+}
+.si:hover{transform:translateY(-2px)}
+.si:active{transform:translateY(0) scale(.98)}
+/* Cuando ya no cabe en la fila: se suelta y se apodera de la pantalla */
+.si.gigante{
+  position:fixed;z-index:4;margin:0;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:28px;line-height:1;
+  transition:left .4s cubic-bezier(.2,.8,.2,1), top .4s cubic-bezier(.2,.8,.2,1),
+             width .4s cubic-bezier(.2,.8,.2,1), height .4s cubic-bezier(.2,.8,.2,1),
+             font-size .4s cubic-bezier(.2,.8,.2,1), border-radius .4s;
+}
+.si.gigante:hover,.si.gigante:active{transform:none}
+.si.gigante.lleno{border-radius:0}
+.no{
+  font-size:1rem;font-weight:700;color:var(--night);background:var(--rose);
+  border:2px solid var(--ink);
+  box-shadow:0 8px 22px -8px var(--shadow);
+  touch-action:manipulation;
+}
+.no.escaping{
+  position:fixed;z-index:5;margin:0;
+  transition:left .28s cubic-bezier(.3,1.4,.5,1), top .28s cubic-bezier(.3,1.4,.5,1);
+}
+.reply{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;
+  padding:.9rem 1rem;border:1px solid var(--line);border-radius:14px;
+  background:rgba(14,20,48,.55);
+}
+.reply span{flex:1 1 12rem;min-width:0;font-size:1.05rem;font-weight:600}
+.copy{
+  display:inline-block;font:inherit;font-size:1rem;font-weight:700;line-height:1.2;cursor:pointer;text-decoration:none;
+  color:var(--night);background:var(--rose);border:0;border-radius:999px;padding:.65em 1.6em;
+  transition:transform .15s;
+}
+.copy:hover{transform:translateY(-2px)}
+.copy:active{transform:scale(.98)}
+/* Pantalla del "Sí": tres fotos encimadas, el gatito animado en el centro */
+.collage{display:flex;align-items:center;padding-block:.75rem .25rem}
+.foto.mini{position:relative;width:34%;flex:none;padding:6px;border-radius:5px;animation:caer .7s cubic-bezier(.3,1.4,.5,1) both}
+.collage .f1{--rot:-8deg;margin-right:-5%;z-index:1;animation-delay:.05s}
+.collage .f2{--rot:3deg;--esc:1.14;z-index:2;animation-delay:.18s}
+.collage .f3{--rot:9deg;margin-left:-5%;z-index:1;animation-delay:.3s}
+@keyframes caer{
+  from{transform:translateY(-36px) rotate(calc(var(--rot) * -1)) scale(var(--esc))}
+  to{transform:rotate(var(--rot)) scale(var(--esc))}
+}
+.gatito{display:block;width:100%;height:auto;aspect-ratio:7/8;border-radius:3px}
+.g-fondo{fill:var(--night-2)}
+.g-halo{fill:var(--moon);opacity:.22}
+.g-naranja{fill:var(--cat)}
+.g-crema{fill:var(--cat-cream)}
+.g-rosa{fill:var(--rose);opacity:.85}
+.g-raya{fill:none;stroke:var(--cat-deep);stroke-width:4;stroke-linecap:round}
+.g-ojo{fill:none;stroke:var(--cat-ink);stroke-width:5;stroke-linecap:round}
+.g-rubor{fill:var(--rose);opacity:.6}
+.g-nariz{fill:var(--rose)}
+.g-boca{fill:none;stroke:var(--cat-ink);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.g-bigote{stroke:var(--cat-ink);stroke-width:2;opacity:.45;stroke-linecap:round}
+.g-cola{fill:none;stroke:var(--cat);stroke-width:14;stroke-linecap:round}
+.g-cor{fill:var(--rose);transform-box:fill-box;transform-origin:center}
+.g-cuerpo{animation:rebote .7s ease-in-out infinite}
+.g-cola{transform-origin:150px 200px;animation:cola .45s ease-in-out infinite alternate}
+.g-pata{transform-origin:142px 184px;animation:saludo .5s ease-in-out infinite alternate}
+.g-cabeza{transform-origin:105px 150px;animation:cabeza 1.4s ease-in-out infinite}
+.g-cor{animation:flota 2.4s ease-in infinite}
+.g-cor.c2{animation-delay:.8s}
+.g-cor.c3{animation-delay:1.6s}
+@keyframes rebote{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes cola{from{transform:rotate(-12deg)}to{transform:rotate(16deg)}}
+@keyframes saludo{from{transform:rotate(-20deg)}to{transform:rotate(14deg)}}
+@keyframes cabeza{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes flota{
+  0%{transform:translateY(12px) scale(.4);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-40px) scale(1.15);opacity:0}
+}
+@media (min-width:760px){
+  .si-view{max-width:62rem;display:grid;grid-template-columns:minmax(300px, 30rem) 1fr;align-items:center;gap:3rem}
+  .si-view .texto{gap:1.25rem}
+}
+
+/* Botón para pasar al menú */
+.ver-menu{
+  align-self:flex-start;font-size:1.05rem;font-weight:700;
+  color:var(--night);background:var(--moon);
+  box-shadow:0 10px 30px -10px var(--glow);transition:transform .15s;
+}
+.ver-menu:hover{transform:translateY(-2px)}
+
+/* Pantalla del menú: tarjeta de papel centrada con platos en dos columnas */
+.menu-view{max-width:32rem}
+.menu{
+  background:var(--ink);color:var(--night);
+  border-radius:16px;padding:1.6rem 1.1rem 1.3rem;
+  box-shadow:0 26px 50px -18px var(--shadow);
+  display:flex;flex-direction:column;gap:1rem;text-align:center;
+}
+.menu-titulo{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(1.8rem, 7vw, 2.3rem);line-height:1.05;text-wrap:balance}
+.menu-sub{margin:-.4rem 0 .2rem;font-size:1rem;color:var(--night-2)}
+.platos{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.plato{position:relative;display:block;cursor:pointer;min-width:0}
+.plato input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.plato span{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  min-height:3.4em;box-sizing:border-box;height:100%;
+  padding:.7em 1.4em;border-radius:12px;border:1.5px solid var(--paper-line);
+  font-family:var(--display);font-size:1.02rem;line-height:1.15;text-wrap:balance;
+  transition:background .15s, border-color .15s, transform .15s;
+}
+.plato span::after{
+  content:"";position:absolute;top:.5em;right:.5em;width:.55em;height:.55em;border-radius:50%;
+  border:1.5px solid var(--paper-line);transition:background .15s, border-color .15s;
+}
+.plato:hover span{border-color:var(--night-2)}
+.plato input:checked + span{background:var(--rose);border-color:var(--rose)}
+.plato input:checked + span::after{background:var(--night);border-color:var(--night)}
+.plato input:focus-visible + span{outline:2px solid var(--night-2);outline-offset:2px}
+.plato:active span{transform:scale(.97)}
+.plato-especial{grid-column:1 / -1}
+.plato-especial span{background:var(--moon-soft);border-color:var(--moon-deep)}
+.plato-especial input:checked + span{background:var(--moon);border-color:var(--moon-deep)}
+.platos.sacude{animation:sacude .4s}
+@keyframes sacude{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.enviar{
+  display:block;margin-top:.3rem;padding:.95em 1em;border-radius:12px;
+  font-size:1.08rem;font-weight:700;text-decoration:none;
+  color:var(--moon);background:var(--night);transition:transform .15s;
+}
+.enviar:hover{transform:translateY(-2px)}
+.enviar:active{transform:scale(.98)}
+.enviar:focus-visible{outline:2px solid var(--night-2);outline-offset:3px}
+.menu-aviso{margin:-.3rem 0 0;font-size:.9rem;color:var(--night-2)}
+
+/* El gato masticando se asoma detrás del menú; dibujos de comida y gaticos en los bordes */
+.menu-view{
+  --gw:clamp(150px, 44vw, 200px);
+  --asomo:calc(var(--gw) * .86);
+  position:relative;padding-top:var(--asomo);padding-bottom:64px;
+}
+.menu{position:relative;z-index:1;padding-bottom:1.9rem}
+.gato-menu{
+  position:absolute;top:0;left:50%;z-index:0;
+  width:var(--gw);height:auto;transform:translateX(-50%);
+  pointer-events:none;
+}
+.doodle{
+  position:absolute;z-index:2;height:auto;pointer-events:none;
+  --r:0deg;transform:rotate(var(--r));
+  animation:flotar 2.6s ease-in-out infinite alternate;
+}
+.d-huevo{width:clamp(56px, 16vw, 76px);left:3%;top:calc(var(--asomo) - 30px);--r:-14deg}
+.d-pan{width:clamp(62px, 18vw, 86px);right:3%;top:calc(var(--asomo) - 34px);--r:12deg;animation-delay:.6s}
+.d-gato1{width:clamp(72px, 21vw, 96px);left:0;top:calc(100% - 92px);--r:-8deg;animation-delay:.3s}
+.d-gato2{width:clamp(70px, 20vw, 92px);right:0;top:calc(100% - 90px);--r:9deg;animation-delay:.9s}
+@keyframes flotar{
+  from{transform:rotate(var(--r)) translateY(0)}
+  to{transform:rotate(var(--r)) translateY(-6px)}
+}
+.dd-clara{fill:var(--egg-white);stroke:var(--egg-edge);stroke-width:2}
+.dd-yema{fill:var(--yolk)}
+.dd-brillo{fill:var(--egg-white);opacity:.75}
+.dd-pan{fill:var(--bread);stroke:var(--bread-deep);stroke-width:2}
+.dd-pan-luz{fill:var(--bread-light)}
+.dd-corte{fill:none;stroke:var(--bread-deep);stroke-width:3;stroke-linecap:round}
+.dd-cara{fill:var(--k, var(--cat))}
+.dd-oreja{fill:var(--rose);opacity:.85}
+.dd-ojo{fill:none;stroke:var(--cat-ink);stroke-width:3;stroke-linecap:round}
+.dd-rubor{fill:var(--rose);opacity:.6}
+.dd-miga{fill:var(--bread-light)}
+.dd-comida{animation:masticar .45s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+@keyframes masticar{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-3px) rotate(3deg)}}
+
+.rise{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{transform:translateY(14px)}to{transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .rise{animation:none}
+  .no.escaping,.si,.si.gigante,.moon{transition:none}
+  .foto.mini,.g-cuerpo,.g-cola,.g-pata,.g-cabeza,.platos.sacude,.doodle,.dd-comida{animation:none}
+  .g-cor{animation:none;opacity:1}
+}
+</style>
+
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="moon" aria-hidden="true"></div>
+
+<main class="stage">
+  <section class="panel ask" id="ask">
+    <figure class="foto" id="foto">
+      <img id="foto-img" src="gato.jpg" width="560" height="640" alt="Gato naranja con cuello de camisa y corbatín, sosteniendo una taza de café y mirando de reojo">
+    </figure>
+    <div class="texto">
+      <p class="eyebrow" id="fecha">Esta noche</p>
+      <h1 class="q">¿Querés verte conmigo <em>esta noche</em>?</h1>
+      <p class="sub">Solo hay una respuesta correcta. Elegí con cuidado.</p>
+      <div class="choices">
+        <button class="btn si" id="si" type="button">Sí</button>
+        <button class="btn no" id="no" type="button">No</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel rise si-view" id="yes-view" hidden>
+    <div class="collage">
+      <figure class="foto mini f1">
+        <img src="husky-dedo.jpg" width="600" height="614" style="object-position:40% 50%" alt="Husky mirando fijo y señalando con el dedo">
+      </figure>
+      <figure class="foto mini f2">
+        <svg class="gatito" viewBox="0 0 210 240" role="img" aria-label="Gatito naranja feliz rebotando y saludando, con corazones">
+          <rect class="g-fondo" width="210" height="240"/>
+          <circle class="g-halo" cx="105" cy="128" r="80"/>
+          <g transform="translate(40 62)"><path class="g-cor c1" d="M0 6 C-9 -1 -6 -10 0 -4 C6 -10 9 -1 0 6Z"/></g>
+          <g transform="translate(172 54)"><path class="g-cor c2" d="M0 6 C-9 -1 -6 -10 0 -4 C6 -10 9 -1 0 6Z"/></g>
+          <g transform="translate(106 30)"><path class="g-cor c3" d="M0 6 C-9 -1 -6 -10 0 -4 C6 -10 9 -1 0 6Z"/></g>
+          <g class="g-cuerpo">
+            <path class="g-cola" d="M150 202 C186 196 192 160 172 144"/>
+            <ellipse class="g-naranja" cx="105" cy="196" rx="50" ry="36"/>
+            <ellipse class="g-crema" cx="105" cy="204" rx="28" ry="22"/>
+            <ellipse class="g-naranja" cx="82" cy="228" rx="14" ry="8"/>
+            <ellipse class="g-naranja" cx="128" cy="228" rx="14" ry="8"/>
+            <g class="g-pata"><ellipse class="g-naranja" cx="154" cy="166" rx="11" ry="15"/></g>
+            <g class="g-cabeza">
+              <path class="g-naranja" d="M52 94 L60 38 L98 66 Z"/>
+              <path class="g-rosa" d="M61 82 L65 52 L86 68 Z"/>
+              <path class="g-naranja" d="M158 94 L150 38 L112 66 Z"/>
+              <path class="g-rosa" d="M149 82 L145 52 L124 68 Z"/>
+              <ellipse class="g-naranja" cx="105" cy="108" rx="62" ry="54"/>
+              <path class="g-raya" d="M94 60 Q98 70 95 78 M105 57 L105 76 M116 60 Q112 70 115 78"/>
+              <ellipse class="g-crema" cx="105" cy="127" rx="27" ry="18"/>
+              <path class="g-ojo" d="M70 106 Q80 92 90 106"/>
+              <path class="g-ojo" d="M120 106 Q130 92 140 106"/>
+              <ellipse class="g-rubor" cx="64" cy="124" rx="11" ry="6.5"/>
+              <ellipse class="g-rubor" cx="146" cy="124" rx="11" ry="6.5"/>
+              <path class="g-nariz" d="M99 117 L111 117 L105 124 Z"/>
+              <path class="g-boca" d="M93 127 Q99 136 105 127 Q111 136 117 127"/>
+              <path class="g-bigote" d="M38 118 L58 121 M38 129 L58 128 M172 118 L152 121 M172 129 L152 128"/>
+            </g>
+          </g>
+        </svg>
+      </figure>
+      <figure class="foto mini f3">
+        <img src="gato-flores.jpg" width="367" height="371" style="object-position:50% 40%" alt="Gatito naranja con un ramo de flores amarillas">
+      </figure>
+    </div>
+    <div class="texto">
+      <p class="eyebrow">Trato hecho</p>
+      <h2 class="q">¡Sabía que ibas a decir que <em>sí</em>!</h2>
+      <button class="btn ver-menu" id="ver-menu" type="button">Ver el menú de esta noche</button>
+    </div>
+  </section>
+
+  <section class="panel rise menu-view" id="menu-view" hidden>
+    <img class="gato-menu" src="gato-masticando.webp" width="280" height="440" alt="Gato blanco y gris masticando, asomado detrás del menú">
+
+    <svg class="doodle d-huevo" viewBox="0 0 80 64" aria-hidden="true">
+      <path class="dd-clara" d="M10 34 C6 20 20 8 36 12 C48 2 70 10 70 26 C80 36 70 54 54 52 C44 62 22 60 18 50 C6 50 4 40 10 34Z"/>
+      <circle class="dd-yema" cx="40" cy="32" r="13"/>
+      <ellipse class="dd-brillo" cx="35" cy="27" rx="4" ry="3"/>
+    </svg>
+
+    <svg class="doodle d-pan" viewBox="0 0 90 60" aria-hidden="true">
+      <path class="dd-pan" d="M8 44 C4 24 22 10 45 10 C68 10 86 24 82 44 C80 52 70 54 45 54 C20 54 10 52 8 44Z"/>
+      <path class="dd-pan-luz" d="M20 26 C26 18 36 15 45 15 C56 15 64 18 70 24 C60 21 32 21 20 26Z"/>
+      <path class="dd-corte" d="M30 24 L35 35 M44 21 L49 33 M58 24 L63 35"/>
+    </svg>
+
+    <svg class="doodle d-gato1" viewBox="0 0 100 96" aria-hidden="true">
+      <path class="dd-cara" d="M18 40 L22 8 L46 28 Z"/>
+      <path class="dd-cara" d="M82 40 L78 8 L54 28 Z"/>
+      <path class="dd-oreja" d="M25 32 L27 16 L39 27 Z"/>
+      <path class="dd-oreja" d="M75 32 L73 16 L61 27 Z"/>
+      <ellipse class="dd-cara" cx="50" cy="52" rx="38" ry="31"/>
+      <path class="dd-ojo" d="M31 47 Q37 40 43 47 M57 47 Q63 40 69 47"/>
+      <ellipse class="dd-rubor" cx="27" cy="58" rx="6" ry="3.5"/>
+      <ellipse class="dd-rubor" cx="73" cy="58" rx="6" ry="3.5"/>
+      <g class="dd-comida">
+        <path class="dd-pan" d="M36 66 C33 58 39 54 45 56 C47 52 53 52 55 56 C61 54 67 58 64 66 L61 88 L39 88 Z"/>
+        <path class="dd-pan-luz" d="M41 66 L59 66 L57 84 L43 84 Z"/>
+        <ellipse class="dd-cara" cx="37" cy="78" rx="7" ry="6"/>
+        <ellipse class="dd-cara" cx="63" cy="78" rx="7" ry="6"/>
+      </g>
+      <circle class="dd-miga" cx="22" cy="86" r="2.2"/>
+      <circle class="dd-miga" cx="78" cy="90" r="1.8"/>
+      <circle class="dd-miga" cx="84" cy="80" r="1.5"/>
+    </svg>
+
+    <svg class="doodle d-gato2" viewBox="0 0 100 96" aria-hidden="true" style="--k:var(--cat-gray)">
+      <path class="dd-cara" d="M18 40 L22 8 L46 28 Z"/>
+      <path class="dd-cara" d="M82 40 L78 8 L54 28 Z"/>
+      <path class="dd-oreja" d="M25 32 L27 16 L39 27 Z"/>
+      <path class="dd-oreja" d="M75 32 L73 16 L61 27 Z"/>
+      <ellipse class="dd-cara" cx="50" cy="52" rx="38" ry="31"/>
+      <path class="dd-ojo" d="M31 47 Q37 40 43 47 M57 47 Q63 40 69 47"/>
+      <ellipse class="dd-rubor" cx="27" cy="58" rx="6" ry="3.5"/>
+      <ellipse class="dd-rubor" cx="73" cy="58" rx="6" ry="3.5"/>
+      <g class="dd-comida">
+        <path class="dd-clara" d="M30 74 C28 66 36 60 44 63 C50 57 62 60 64 66 C72 68 72 80 64 82 C58 90 40 90 36 84 C28 84 26 78 30 74Z"/>
+        <circle class="dd-yema" cx="49" cy="73" r="8"/>
+        <ellipse class="dd-brillo" cx="46" cy="70" rx="2.5" ry="2"/>
+        <ellipse class="dd-cara" cx="30" cy="80" rx="7" ry="6"/>
+        <ellipse class="dd-cara" cx="70" cy="80" rx="7" ry="6"/>
+      </g>
+    </svg>
+
+    <div class="menu" role="group" aria-labelledby="menu-titulo">
+      <h2 class="menu-titulo" id="menu-titulo">¿Qué querés comer?</h2>
+      <p class="menu-sub">El menú de esta noche es:</p>
+      <div class="platos" id="platos">
+        <label class="plato"><input type="checkbox" id="p1" data-msg="huevos revueltos"><span>Huevos revueltos</span></label>
+        <label class="plato"><input type="checkbox" id="p2" data-msg="huevos fritos"><span>Huevos fritos</span></label>
+        <label class="plato"><input type="checkbox" id="p3" data-msg="huevos freídos"><span>Huevos freídos</span></label>
+        <label class="plato"><input type="checkbox" id="p4" data-msg="pan de queso"><span>Pan de queso</span></label>
+        <label class="plato"><input type="checkbox" id="p5" data-msg="pan aliñado"><span>Pan aliñado</span></label>
+        <label class="plato"><input type="checkbox" id="p6" data-msg="pan con queso"><span>Pan con queso</span></label>
+        <label class="plato"><input type="checkbox" id="p7" data-msg="pan campesino"><span>Pan campesino</span></label>
+        <label class="plato"><input type="checkbox" id="p8" data-msg="aguapanela"><span>Aguapanela</span></label>
+        <label class="plato"><input type="checkbox" id="p9" data-msg="aguapanela con leche"><span>Aguapanela con leche</span></label>
+        <label class="plato"><input type="checkbox" id="p10" data-msg="aguapanela con café"><span>Aguapanela con café</span></label>
+        <label class="plato plato-especial"><input type="checkbox" id="p11" data-msg="a vos"><span>Y por último… yo, mai lof</span></label>
+      </div>
+      <a class="enviar" id="enviar" href="https://wa.me/573228370092?text=Claro%20que%20s%C3%AD%20voy%2C%20mai%20lof%20de%20mel%C3%B3n." target="_blank" rel="noopener">Enviar</a>
+      <p class="menu-aviso" id="menu-aviso" hidden>Elegí al menos una cosa del menú.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s){ return document.querySelector(s); };
+
+  /* Fecha del día en que lo abren */
+  try{
+    var s = new Date().toLocaleDateString('es-CO', { weekday:'long', day:'numeric', month:'long' });
+    $('#fecha').textContent = s.charAt(0).toUpperCase() + s.slice(1);
+  }catch(e){}
+
+  var si = $('#si'), no = $('#no');
+  var frases = ['No','¿En serio?','Pensalo bien','Mirá que hay luna','No seás así','Dale, decí que sí','Casi me alcanzás','Uy, por poquito','Te estoy esperando','¿Y si mejor sí?'];
+  var intentos = 0;
+
+  /* ---------- El "Sí" que crece ---------- */
+  var g = null, fuenteMin = 0, siDestino = null, grow = 1;
+
+  function fijar(){
+    var r = si.getBoundingClientRect();
+    fuenteMin = parseFloat(getComputedStyle(si).fontSize) || 17;
+    $('.choices').style.minHeight = r.height + 'px';
+    si.style.transition = 'none';
+    si.style.left = r.left + 'px'; si.style.top = r.top + 'px';
+    si.style.width = r.width + 'px'; si.style.height = r.height + 'px';
+    si.style.fontSize = fuenteMin + 'px';
+    si.classList.add('gigante');
+    si.getBoundingClientRect();
+    si.style.transition = '';
+    var vw = window.innerWidth, vh = window.innerHeight;
+    g = { fw:r.width / vw, fh:r.height / vh, cx:(r.left + r.width / 2) / vw, cy:(r.top + r.height / 2) / vh };
+  }
+
+  function pintarSi(){
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var w = g.fw * vw, h = g.fh * vh;
+    var l = Math.min(Math.max(g.cx * vw - w / 2, 0), vw - w);
+    var t = Math.min(Math.max(g.cy * vh - h / 2, 0), vh - h);
+    si.style.left = l + 'px'; si.style.top = t + 'px';
+    si.style.width = w + 'px'; si.style.height = h + 'px';
+    si.style.fontSize = Math.max(fuenteMin, Math.min(h * 0.42, w * 0.3)) + 'px';
+    si.classList.toggle('lleno', g.fw >= 1 && g.fh >= 1);
+    siDestino = { left:l, top:t, right:l + w, bottom:t + h };
+  }
+
+  function crecer(){
+    if(g.fw < 1) g.fw = Math.min(1, g.fw + 0.08);   /* primero a lo ancho */
+    else g.fh = Math.min(1, g.fh + 0.06);           /* después a lo alto */
+    pintarSi();
+  }
+
+  function crecerSi(){
+    if(g){ crecer(); return; }
+    var siguiente = 1 + intentos * 0.07;
+    var factor = siguiente / grow;
+    var cabeAncho = si.offsetWidth * factor <= ($('.choices').clientWidth || window.innerWidth - 32);
+    var cabeAlto = si.offsetHeight * factor <= window.innerHeight * 0.4;
+    if(cabeAncho && cabeAlto){
+      grow = siguiente;
+      si.style.setProperty('--grow', grow);
+    }else{
+      fijar();
+      crecer();
+    }
+  }
+
+  /* ---------- El gato reacciona y se mueve cada vez que oprimen "No" ---------- */
+  var foto = $('#foto'), fotoImg = $('#foto-img'), ask = $('#ask');
+  var reacciones = [
+    { src:'gato-sorpresa.jpg',  pos:'50% 30%', alt:'Gato blanco con los ojos muy abiertos y la boca abierta, sorprendido' },
+    { src:'gato-ojos.jpg',      pos:'50% 50%', alt:'Gato atigrado mirando de frente con los ojos enormes y la boca abierta' },
+    { src:'gato-cabizbajo.jpg', pos:'50% 50%', alt:'Gatito gris con la cabeza agachada, mirando hacia abajo' },
+    { src:'gato-bravo.jpg',     pos:'50% 45%', alt:'Gato gris mirando de reojo con el ceño fruncido' },
+    { src:'gato-triste.jpg',    pos:'88% 50%', alt:'Gatito gris y blanco con lágrimas en los ojos y el texto I\'m sad' },
+    { src:'gato-llorando.jpg',  pos:'50% 18%', alt:'Gatito naranja de pie con lágrimas en los ojos' },
+    { src:'gato-cobija-azul.jpg', pos:'50% 30%', alt:'Gatito gris y blanco con los ojos llorosos sobre una cobija azul' },
+    { src:'gato-envuelto.jpg',  pos:'50% 25%', alt:'Gatito naranja envuelto en una cobija, con los ojos llorosos' },
+    { src:'gato-pata-boca.jpg', pos:'50% 40%', alt:'Gato blanco y negro tapándose la boca con la pata, sorprendido' },
+    { src:'husky-dedo.jpg',     pos:'40% 50%', alt:'Husky mirando fijo y señalando con el dedo' },
+    { src:'gato-grito.jpg',     pos:'40% 50%', alt:'Animal blanco gritando con la boca muy abierta' },
+    { src:'gato-cable.jpg',     pos:'50% 50%', alt:'Gato blanco y peludo mordiendo un cable con cara de susto' },
+    { src:'gato-pan.jpg',       pos:'50% 40%', alt:'Gato llorando mientras abraza un pan' },
+    { src:'gato-ducha.jpg',     pos:'50% 50%', alt:'Gatito mojado bajo la ducha con los ojos llorosos' }
+  ];
+  var fotoDestino = null;
+  reacciones.forEach(function(r){ var im = new Image(); im.src = r.src; });
+
+  /* lado: solo cambia en pantallas anchas; alinear: izquierda/centro/derecha en el celular */
+  var poses = [
+    { der:false, alinear:'flex-start', rot:-3, esc:1 },
+    { der:true,  alinear:'flex-end',   rot:6,  esc:1.04 },
+    { der:false, alinear:'center',     rot:-8, esc:.94 },
+    { der:true,  alinear:'flex-start', rot:3,  esc:1.03 },
+    { der:false, alinear:'flex-end',   rot:-5, esc:.97 },
+    { der:true,  alinear:'center',     rot:9,  esc:1.06 },
+    { der:false, alinear:'center',     rot:-1, esc:1 }
+  ];
+  var poseActual = poses[0];
+
+  function moverFoto(p){
+    var a = foto.getBoundingClientRect();
+    var prev = poseActual;
+    ask.classList.toggle('foto-der', p.der);
+    foto.style.alignSelf = p.alinear;
+    foto.style.setProperty('--rot', p.rot + 'deg');
+    foto.style.setProperty('--esc', p.esc);
+    poseActual = p;
+    var b = foto.getBoundingClientRect();
+    fotoDestino = { left:b.left, top:b.top, right:b.right, bottom:b.bottom };
+    if(reduce || !foto.animate) return;
+    var dx = (a.left + a.width / 2) - (b.left + b.width / 2);
+    var dy = (a.top + a.height / 2) - (b.top + b.height / 2);
+    var pasada = p.rot + (p.rot - prev.rot) * 0.35;
+    foto.animate([
+      { transform:'translate(' + dx + 'px,' + dy + 'px) rotate(' + prev.rot + 'deg) scale(' + prev.esc + ')' },
+      { transform:'translate(0px,0px) rotate(' + pasada + 'deg) scale(' + (p.esc * 1.05) + ')', offset:.65 },
+      { transform:'translate(0px,0px) rotate(' + p.rot + 'deg) scale(' + p.esc + ')' }
+    ], { duration:520, easing:'cubic-bezier(.2,.8,.2,1)' });
+  }
+
+  function reaccionar(){
+    /* recorre la serie una vez y se queda en la última */
+    var r = reacciones[Math.min(intentos - 1, reacciones.length - 1)];
+    fotoImg.src = r.src;
+    fotoImg.style.objectPosition = r.pos;
+    fotoImg.alt = r.alt;
+    moverFoto(poses[intentos % poses.length]);
+  }
+
+  /* ---------- El "No" que se escapa ---------- */
+  /* área en común entre el botón y un rectángulo (con margen) */
+  function solape(x, y, w, h, r, m){
+    var ox = Math.min(x + w, r.right + m) - Math.max(x, r.left - m);
+    var oy = Math.min(y + h, r.bottom + m) - Math.max(y, r.top - m);
+    return ox > 0 && oy > 0 ? ox * oy : 0;
+  }
+
+  function ubicar(){
+    if(!no.classList.contains('escaping')){
+      var r0 = no.getBoundingClientRect();
+      no.style.left = r0.left + 'px';
+      no.style.top = r0.top + 'px';
+      no.classList.add('escaping');
+      no.getBoundingClientRect();
+    }
+    var b = no.getBoundingClientRect();
+    var sr = g && siDestino ? siDestino : si.getBoundingClientRect();
+    var fr = fotoDestino || foto.getBoundingClientRect();
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var px = 16, py = 56, mejor = null, mejorPuntos = Infinity;
+    /* busca un lugar libre: nunca encima de la foto, ojalá lejos del "Sí" */
+    for(var n = 0; n < 120; n++){
+      var x = px + Math.random() * Math.max(0, vw - b.width - px * 2);
+      var y = py + Math.random() * Math.max(0, vh - b.height - py * 2);
+      var puntos = solape(x, y, b.width, b.height, fr, 14) * 50
+                 + solape(x, y, b.width, b.height, sr, 20)
+                 + (Math.hypot(x - b.left, y - b.top) < 90 ? 400 : 0);
+      if(puntos < mejorPuntos){ mejorPuntos = puntos; mejor = [x, y]; if(puntos === 0) break; }
+    }
+    no.style.left = mejor[0] + 'px';
+    no.style.top = mejor[1] + 'px';
+  }
+
+  function escapar(){
+    intentos++;
+    crecerSi();
+    reaccionar();
+    no.textContent = frases[1 + (intentos - 1) % (frases.length - 1)];
+    ubicar();
+  }
+
+  no.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') escapar(); });
+  no.addEventListener('touchstart', function(e){ e.preventDefault(); escapar(); }, { passive:false });
+  no.addEventListener('click', function(e){ e.preventDefault(); escapar(); });
+
+  window.addEventListener('resize', function(){
+    fotoDestino = null;
+    if(g) pintarSi();
+    if(!no.classList.contains('escaping')) return;
+    var b = no.getBoundingClientRect();
+    no.style.left = Math.min(Math.max(16, b.left), window.innerWidth - b.width - 16) + 'px';
+    no.style.top = Math.min(Math.max(56, b.top), window.innerHeight - b.height - 56) + 'px';
+  });
+
+  si.addEventListener('click', mostrar);
+
+  function mostrar(){
+    $('#ask').hidden = true;
+    no.hidden = true;
+    $('#yes-view').hidden = false;
+    document.body.classList.add('dijo-si');
+    corazones();
+    $('.stage').scrollTop = 0;
+    $('#ver-menu').focus({ preventScroll:true });
+  }
+
+  /* ---------- Pantalla del menú ---------- */
+  $('#ver-menu').addEventListener('click', function(){
+    $('#yes-view').hidden = true;
+    $('#menu-view').hidden = false;
+    $('.stage').scrollTop = 0;
+    $('#p1').focus({ preventScroll:true });
+  });
+
+  /* El pedido va dentro del mensaje de WhatsApp */
+  var mensajeBase = 'Claro que sí voy, mai lof de melón';
+  function lista(a){
+    return a.length === 1 ? a[0] : a.slice(0, -1).join(', ') + ' y ' + a[a.length - 1];
+  }
+  function elegidos(){
+    return Array.prototype.map.call(document.querySelectorAll('.plato input:checked'), function(i){ return i.getAttribute('data-msg'); });
+  }
+  function actualizarPedido(){
+    var e = elegidos();
+    var texto = mensajeBase + (e.length ? ', y quiero: ' + lista(e) + '.' : '.');
+    $('#enviar').href = 'https://wa.me/573228370092?text=' + encodeURIComponent(texto);
+    if(e.length) $('#menu-aviso').hidden = true;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.plato input'), function(i){
+    i.addEventListener('change', actualizarPedido);
+  });
+  $('#enviar').addEventListener('click', function(ev){
+    if(elegidos().length) return;
+    ev.preventDefault();
+    $('#menu-aviso').hidden = false;
+    var p = $('#platos');
+    p.classList.remove('sacude'); void p.offsetWidth; p.classList.add('sacude');
+  });
+  actualizarPedido();
+
+  /* ---------- Copiar respuesta ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      var texto = el.textContent;
+      var listo = function(){ btn.textContent = 'Copiado'; setTimeout(function(){ btn.textContent = 'Copiar'; }, 1800); };
+      var plan_b = function(){
+        try{
+          var r = document.createRange(); r.selectNodeContents(el);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        }catch(e){}
+        btn.textContent = 'Ya está seleccionado';
+      };
+      try{ navigator.clipboard.writeText(texto).then(listo, plan_b); }catch(e){ plan_b(); }
+    });
+  });
+
+  /* ---------- Cielo: estrellas, fugaces y corazones ---------- */
+  var c = $('#sky'), ctx = c.getContext('2d');
+  var css = getComputedStyle(document.documentElement);
+  var tinta = css.getPropertyValue('--ink').trim() || '#f4ede0';
+  var rosa = css.getPropertyValue('--rose').trim() || '#f08a98';
+  var luna = css.getPropertyValue('--moon').trim() || '#f5c86a';
+  var W, H, estrellas = [], fugaz = null, proximaFugaz = 0, particulas = [];
+
+  function tam(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    c.width = W * dpr; c.height = H * dpr;
+    c.style.width = W + 'px'; c.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.round(W * H / 5000);
+    estrellas = [];
+    for(var i = 0; i < n; i++){
+      estrellas.push({ x:Math.random()*W, y:Math.random()*H*0.92, r:Math.random()*1.3+0.3, p:Math.random()*6.28, s:0.6+Math.random()*1.6 });
+    }
+    if(reduce) pintar(0);
+  }
+
+  function corazon(x, y, size, rot, color, alpha){
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot); ctx.scale(size/16, size/16);
+    ctx.globalAlpha = alpha; ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(0, 6);
+    ctx.bezierCurveTo(-10, -1, -6, -11, 0, -4.5);
+    ctx.bezierCurveTo(6, -11, 10, -1, 0, 6);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function corazones(){
+    if(reduce) return;
+    var colores = [rosa, luna, tinta];
+    for(var i = 0; i < 70; i++){
+      particulas.push({
+        x: W * (0.15 + Math.random() * 0.7),
+        y: H + 20 + Math.random() * H * 0.4,
+        vy: 1.4 + Math.random() * 2.6,
+        vx: (Math.random() - 0.5) * 0.8,
+        s: 10 + Math.random() * 18,
+        rot: (Math.random() - 0.5) * 0.6,
+        w: Math.random() * 6.28,
+        col: colores[i % 3],
+        a: 1
+      });
+    }
+  }
+
+  function pintar(t){
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = tinta;
+    for(var i = 0; i < estrellas.length; i++){
+      var e = estrellas[i];
+      ctx.globalAlpha = reduce ? 0.7 : 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t * 0.001 * e.s + e.p));
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if(reduce) return;
+
+    if(!fugaz && t > proximaFugaz){
+      fugaz = { x: Math.random()*W*0.7, y: Math.random()*H*0.35, vx: 7 + Math.random()*4, vy: 2.5 + Math.random()*2, vida: 0 };
+    }
+    if(fugaz){
+      fugaz.vida++;
+      fugaz.x += fugaz.vx; fugaz.y += fugaz.vy;
+      var gr = ctx.createLinearGradient(fugaz.x, fugaz.y, fugaz.x - fugaz.vx*12, fugaz.y - fugaz.vy*12);
+      gr.addColorStop(0, tinta); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.strokeStyle = gr; ctx.lineWidth = 1.6; ctx.globalAlpha = Math.max(0, 1 - fugaz.vida/60);
+      ctx.beginPath(); ctx.moveTo(fugaz.x, fugaz.y); ctx.lineTo(fugaz.x - fugaz.vx*12, fugaz.y - fugaz.vy*12); ctx.stroke();
+      ctx.globalAlpha = 1;
+      if(fugaz.vida > 60 || fugaz.x > W + 50 || fugaz.y > H + 50){ fugaz = null; proximaFugaz = t + 4000 + Math.random()*5000; }
+    }
+
+    for(var k = particulas.length - 1; k >= 0; k--){
+      var p = particulas[k];
+      p.y -= p.vy; p.w += 0.04; p.x += p.vx + Math.sin(p.w) * 0.6;
+      if(p.y < H * 0.25) p.a -= 0.012;
+      if(p.a <= 0 || p.y < -40){ particulas.splice(k, 1); continue; }
+      corazon(p.x, p.y, p.s, p.rot + Math.sin(p.w) * 0.2, p.col, Math.max(0, p.a));
+    }
+  }
+
+  function bucle(t){ pintar(t); requestAnimationFrame(bucle); }
+
+  window.addEventListener('resize', tam);
+  tam();
+  proximaFugaz = 2500;
+  if(!reduce) requestAnimationFrame(bucle);
+})();
+</script>
+
+</body>
+</html>
